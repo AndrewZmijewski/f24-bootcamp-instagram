@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct PostView: View {
+    
+    @State var likes = 99
+    @State var isRed = false
+    @State var isBookmarked = false
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
@@ -26,15 +31,44 @@ struct PostView: View {
                 .resizable()
                 .scaledToFit()
             HStack(spacing: 16) {
-                Image(systemName: "heart")
+                Button {
+                    if(isRed) {
+                        likes -= 1
+                        isRed.toggle()
+                    }
+                    else {
+                        likes += 1
+                        isRed.toggle()
+                    }
+                } label: {
+                    if(isRed) {
+                        Image(systemName: "heart.fill")
+                            .foregroundStyle(.red)
+                    }
+                    else {
+                        Image(systemName: "heart")
+                            .foregroundStyle(.black)
+                    }
+                }
                 Image(systemName: "message")
                 Image(systemName: "paperplane")
                 Spacer()
-                Image(systemName: "bookmark")
+                Button {
+                    isBookmarked.toggle()
+                } label: {
+                    if(isBookmarked) {
+                        Image(systemName: "bookmark.fill")
+                            .foregroundStyle(.black)
+                    }
+                    else {
+                        Image(systemName: "bookmark")
+                            .foregroundStyle(.black)
+                    }
+                }
             }
             .font(.title2)
             .padding(.horizontal, 8)
-            Text("110 likes")
+            Text("\(likes) likes")
                 .font(.footnote)
                 .fontWeight(.semibold)
                 .padding(.horizontal, 8)
